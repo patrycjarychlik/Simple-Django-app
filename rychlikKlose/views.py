@@ -3,5 +3,5 @@ from django.shortcuts import render, redirect
 
 
 def welcome(request):
-    return  HttpResponse("Hello Buch!");
+    return  render(request, "rychlikKlose/welcome.html");
 
