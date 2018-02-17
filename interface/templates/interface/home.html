@@ -1,19 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-    <body>
-    Sample Page! You've made it!
+{% extends "base.html" %}
 
-        <ul>
-            {% for i in items %}
-            <li>
-                {{i.name}}
-            </li>
-            {% endfor %}
-        </ul>
+{% block content %}
+<h1>Sample Page! You've made it!</h1>
 
-    </body>
-</html>
+<ul>
+    {% for i in items %}
+    <li>
+        {{i.name}}
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
