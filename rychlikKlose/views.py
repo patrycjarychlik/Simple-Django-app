@@ -3,5 +3,8 @@ from django.shortcuts import render, redirect
 
 
 def welcome(request):
-    return  render(request, "rychlikKlose/welcome.html");
+    if request.user.is_authenticated:
+        return redirect('user_page')
+    else:
+        return  render(request, "rychlikKlose/welcome.html")
 
