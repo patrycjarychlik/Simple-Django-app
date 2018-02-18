@@ -2,25 +2,40 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h1>Sample Page! You've made it!</h1>
-
-  <form method="post" action="{% url 'user_page' %}">
-        {{ addItemForm | crispy }}
 
 
+<div class="row content">
+    <div class="col-sm-3 sidenav">
+        <h4>Lists:</h4>
+        <ul class="nav">
+             {% for l in lists %}
+            <li class="list-group-item">
+                <a href="">{{ l.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 
-        {% csrf_token %}
-        <button type="submit" name="addItem" >Add</button>
-    </form>
+    <div class="col-sm-9">
 
-{{text}}
+        <form method="post" action="{% url 'user_page' %}">
+            <div class="input-group">
+                {{ addItemForm | crispy }}
+                {% csrf_token %}
+                <span class="input-group-btn">
+                    <button class="btn btn-default" name="addItem" type="submit">Add</button>
+                </span>
+            </div>
+        </form>
 
-<ul>
-    {% for i in items %}
-    <li>
-        {{i.name}}
-    </li>
-    {% endfor %}
-</ul>
+        <ul class="list-group">
+            {% for i in items %}
+            <li class="list-group-item">
+                {{i.text}}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 
 {% endblock %}
