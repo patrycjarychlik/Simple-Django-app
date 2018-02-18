@@ -17,7 +17,7 @@ class List(models.Model):
 
 class Item(models.Model):
     text = models.TextField()
-    date = models.DateField()
+    date = models.DateTimeField(auto_now=True)
     list = models.ForeignKey(List, on_delete=models.CASCADE)
     marked = models.BooleanField(default=True)
 

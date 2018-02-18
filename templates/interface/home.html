@@ -1,7 +1,19 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <h1>Sample Page! You've made it!</h1>
+
+  <form method="post" action="{% url 'user_page' %}">
+        {{ addItemForm | crispy }}
+
+
+
+        {% csrf_token %}
+        <button type="submit" name="addItem" >Add</button>
+    </form>
+
+{{text}}
 
 <ul>
     {% for i in items %}

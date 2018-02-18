@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'website',
     'interface',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -125,6 +126,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
 
-LOGIN_REDIRECT_URL="user_page"
-LOGOUT_REDIRECT_URL="main_welcome"
-LOGIN_URL="login"
+LOGIN_REDIRECT_URL = "user_page"
+LOGOUT_REDIRECT_URL = "main_welcome"
+LOGIN_URL = "login"
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
