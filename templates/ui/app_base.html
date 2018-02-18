@@ -1,0 +1,40 @@
+{% extends "main.html" %}
+{% load staticfiles %}
+
+{% block www %}
+
+<style>
+    body {
+        padding-top: 120px;
+        padding-bottom: 20px;
+    }
+</style>
+
+<nav class="navbar navbar-fixed-top" role="navigation">
+    <header id="header">
+        <div class="container">
+
+            <div id="logo" class="pull-left">
+                <a href="/"><img src="{% static 'img/logo.png' %}" alt="" title=""/></img></a>
+            </div>
+
+            <nav id="nav-menu-container">
+                <ul class="nav-menu">
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+</nav>
+
+<div class="container app-content">
+    {% block content %}
+    {% endblock %}
+</div>
+
+{% endblock %}
+

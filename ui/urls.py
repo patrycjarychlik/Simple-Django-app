@@ -12,7 +12,7 @@ urlpatterns = [
     path('item/delete/<int:item_id>/<int:list_id>', delete_item, name="delete_item"),
 
     path('login',
-         LoginView.as_view(template_name="ui/login_form.html"),
+         LoginView.as_view(template_name="app/login_form.html"),
          name="login"),
 
     path('logout',

@@ -14,7 +14,7 @@ def home(request):
 @login_required
 def open_list(request, list_id):
     form = AddItemForm()
-    return  render(request, "ui/home.html",
+    return  render(request, "ui/app.html",
                    {
                        'items': Item.objects.filter(list_id=list_id),
                        'count': Item.objects.filter(list_id=list_id).count(),

@@ -1,0 +1,181 @@
+{% extends "main.html" %}
+{% load staticfiles %}
+
+{% block www %}
+
+<div id="preloader"></div>
+
+  <!--==========================
+  Hero Section
+  ============================-->
+  <section id="hero">
+    <div class="hero-container">
+      <div class="wow fadeIn">
+        <div class="hero-logo">
+          <img class="" src="{% static 'img/logo.png' %}" alt="weddify">
+        </div>
+
+        <h1>Organizer ślubny</h1>
+        <h2> <span class="rotating">zaplanuj ślub swoich marzeń, zapisz ślubne notatki, zbilansuj swój weselny budżet.</span></h2>
+        <div class="actions">
+          <a href="{% url 'login' %}" class="btn-get-started">Zaloguj się</a>
+          <a href="#ourFeatures" class="btn-ourFeatures">Poznaj nas</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--==========================
+  Header Section
+  ============================-->
+  <header id="header">
+    <div class="container">
+
+      <div id="logo" class="pull-left">
+        <a href="#hero"><img src="{% static 'img/logo.png' %}" alt="" title="" /></img></a>
+      </div>
+
+      <nav id="nav-menu-container">
+        <ul class="nav-menu">
+          <li class="menu-active"><a href="#hero">Home</a></li>
+          <li><a href="#bridelle">Dlaczego?</a></li>
+          <li><a href="#ourFeatures">Funkcjonalności</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!-- #header -->
+
+  <!--==========================
+  bridelle Section
+  ============================-->
+  <section id="bridelle">
+    <div class="container wow fadeInUp">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="section-title">Po co komu planner?</h3>
+          <div class="section-title-divider"></div>
+          <p class="section-description">Dlaczego? Przeczytaj wypowiedź redaktorki Bridelle.pl na temat plannerów ślubnych </p>
+        </div>
+      </div>
+    </div>
+    <div class="container bridelle-container wow fadeInUp">
+      <div class="row">
+        <div class="col-md-6 col-md-push-6 bridelle-content">
+          <h2 class="bridelle-title">Czy potrzebny Ci planer ślubny?</h2>
+          <p class="bridelle-text">
+            Jestem maniaczką notesów i robienia notatek. Ci wszyscy, którzy mnie znają, wiedzą, że nie rozstaję się nigdy ze swoim notatnikiem oraz długopisem. Zapisuję dosłownie wszystko – pomysły na sesje, artykuły, telefony do znajomych, zadania do wykonania.
+          </p>
+          <p class="bridelle-text">
+            W pozornym chaosie tych wszystkich zadań mam swój system, który pozwala mi nie pogubić się. W ciągu wielu lat prowadzenia bloga dostawałam do recenzowania bardzo różne plannery. Wszystkie były w formie notatników, co dla mnie jest ogromną zaletą, ale po latach w branży ślubnej wiem, że jest to w zasadzie narzędzie pomocnicze.
+          </p>
+          <p class="bridelle-text">
+           Ilość spraw do skoordynowania, ilość elementów do zaplanowania oraz przede wszystkim kwestia budżetu, którego trzeba pilnować są absolutnie niewiarygodne! Nie da się tego pilnować na kartkach papieru.
+          </p>
+          <p class="pull-right">
+            - blog Bridelle.pl
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--==========================
+  ourFeatures Section
+  ============================-->
+  <section id="ourFeatures">
+    <div class="container wow fadeInUp">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="section-title">Funkcjonalności</h3>
+          <div class="section-title-divider"></div>
+          <p class="section-description"></p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 service-item">
+          <div class="service-icon"><i class="fa fa-desktop"></i></div>
+          <h4 class="service-title"><a href="">Lista Zadań</a></h4>
+          <p class="service-description">Dodawaj zadania i wszystkie sprawy które musisz załatwić przed ślubem. Wszytsko zgromadzone jedym miejscu.</p>
+        </div>
+        <div class="col-md-4 service-item">
+          <div class="service-icon"><i class="fa fa-bar-chart"></i></div>
+          <h4 class="service-title"><a href="">Budżet</a></h4>
+          <p class="service-description">Udostępniamy podstawowy kalkulator budżetu ślubnego. Dodawaj dostawców i zadania wraz z ceną za usługe.</p>
+        </div>
+        <div class="col-md-4 service-item">
+          <div class="service-icon"><i class="fa fa-paper-plane"></i></div>
+          <h4 class="service-title"><a href="">Dostępne wszędzie</a></h4>
+          <p class="service-description">Zaloguj się do swojego planera z dowolnego komputera. Notatki będziesz zawsze mieć przy sobie.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--==========================
+  Zarejestruj się
+  ============================-->
+  <section id="register">
+    <div class="container wow fadeInUp">
+      <div class="row">
+        <div class="col-md-8">
+          <h3 class="register-title">Zarejestruj się za darmo!</h3>
+          <p class="register-text">Dołącz do zarejestrowanych uczestników i zaplanuj swój ślub.</p>
+        </div>
+        <div class="col-md-4 register-btn-container">
+          <a class="register-btn" href="#">Zacznij Planowanie</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!--==========================
+  Zig ziglar
+  ============================-->
+  <section id="advice">
+    <div class="container wow fadeInUp">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="section-title">Zoptymalizuj swój czas</h3>
+          <div class="section-title-divider"></div>
+          <p class="section-description">Ręcznie liczenie kosztów i zapisywanie informacji na niewygodnych karteczkach to już przeszłość. Zarejestruj się już teraz i nie trać zbyt wiele czasu na planowanie.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+          <div class="profile">
+            <div class="pic"><img src="{% static 'img/zig-ziglar.png' %}" alt=""></div>
+            <h4>Zig Ziglar</h4>
+            <span>Amerykański pisasz i motywator</span>
+          </div>
+        </div>
+        <div class="col-md-9">
+          <div class="quote">
+            <b><img src="{% static 'img/quote_sign_left.png' %}" alt=""></b> Not many people thinks bridelle it but after all everyone knows that people spend more time in planning the wedding than they do in planning the marriage.<small><img src="{% static 'img/quote_sign_right.png' %}" alt=""></small>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!--==========================
+  Stopka
+============================-->
+  <footer id="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="copyright">
+            Planner Ślubny    -    Rychlik | Klose
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- #footer -->
+
+{% endblock %}
