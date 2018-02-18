@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from ui.forms import AddItemForm
 from website.models import List, Item
@@ -41,5 +41,12 @@ def add_item(request, list_id):
                        'addItemForm' : form,
                        'list_id': list_id
                     })
+
+@login_required
+def delete_item(request, item_id, list_id):
+    if request.method == "POST":
+        item = get_object_or_404(Item, pk=item_id)
+        item.delete()
+    return open_list(request, list_id)
 
 

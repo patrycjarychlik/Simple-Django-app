@@ -18,7 +18,7 @@
 
     <div class="col-sm-9">
 
-        <form method="post" action="{% url 'add_item' list_id=list_id %}">
+        <form method="POST" action="{% url 'add_item' list_id=list_id %}">
             <div class="input-group">
                 {{ addItemForm | crispy }}
                 {% csrf_token %}
@@ -28,15 +28,19 @@
             </div>
         </form>
 
+
         <ul class="list-group">
             {% for i in items %}
             <li class="list-group-item">
                 {{i.text}}
-                <button type="button" class="close" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </li>
 
+                <form method="POST" action="{% url 'delete_item' i.id list_id %}" style="display:inline">
+                    {% csrf_token %}
+                    <button type="submit" class="close" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </form>
+            </li>
             {% endfor %}
         </ul>
     </div>
