@@ -10,7 +10,7 @@
         <ul class="nav">
              {% for l in lists %}
             <li class="list-group-item">
-                <a href="">{{ l.name }}</a>
+                <a href="{% url 'list_page' list_id=l.id %}" >{{ l.name }}</a>
             </li>
             {% endfor %}
         </ul>

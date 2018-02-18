@@ -22,8 +22,19 @@ def home(request):
         form = AddItemForm()
     return  render(request, "ui/home.html",
                    {
-                       'items': Item.objects.all(),
+                       'items': Item.objects.filter(list_id=1),
                        'lists': List.objects.all(),
                        'addItemForm' : form
                     })
+
+@login_required
+def open_list(request, list_id):
+    form = AddItemForm()
+    return  render(request, "ui/home.html",
+                   {
+                       'items': Item.objects.filter(list_id=list_id),
+                       'lists': List.objects.all(),
+                       'addItemForm' : form
+                    })
+
 
