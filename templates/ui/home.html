@@ -32,7 +32,11 @@
             {% for i in items %}
             <li class="list-group-item">
                 {{i.text}}
+                <button type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </li>
+
             {% endfor %}
         </ul>
     </div>
