@@ -18,7 +18,7 @@
 
     <div class="col-sm-9">
 
-        <form method="post" action="{% url 'user_page' %}">
+        <form method="post" action="{% url 'add_item' list_id=list_id %}">
             <div class="input-group">
                 {{ addItemForm | crispy }}
                 {% csrf_token %}

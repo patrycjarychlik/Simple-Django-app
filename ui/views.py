@@ -9,23 +9,7 @@ from website.models import List, Item
 
 @login_required
 def home(request):
-    if request.method == "POST":
-        if 'addItem' in request.POST:
-            item = Item(
-                list_id=1
-            )
-            form = AddItemForm(instance=item, data=request.POST)
-            if form.is_valid():
-                form.save()
-            form = AddItemForm()
-    else:
-        form = AddItemForm()
-    return  render(request, "ui/home.html",
-                   {
-                       'items': Item.objects.filter(list_id=1),
-                       'lists': List.objects.all(),
-                       'addItemForm' : form
-                    })
+    return open_list(request, 1)
 
 @login_required
 def open_list(request, list_id):
@@ -34,7 +18,28 @@ def open_list(request, list_id):
                    {
                        'items': Item.objects.filter(list_id=list_id),
                        'lists': List.objects.all(),
-                       'addItemForm' : form
+                       'addItemForm' : form,
+                       'list_id': list_id
+                    })
+
+@login_required
+def add_item(request, list_id):
+    if request.method == "POST":
+        if 'addItem' in request.POST:
+            item = Item(
+                list_id=list_id
+            )
+            form = AddItemForm(instance=item, data=request.POST)
+            if form.is_valid():
+                form.save()
+            form = AddItemForm()
+
+    return  render(request, "ui/home.html",
+                   {
+                       'items': Item.objects.filter(list_id=list_id),
+                       'lists': List.objects.all(),
+                       'addItemForm' : form,
+                       'list_id': list_id
                     })
 
 
