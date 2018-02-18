@@ -17,6 +17,7 @@ def open_list(request, list_id):
     return  render(request, "ui/home.html",
                    {
                        'items': Item.objects.filter(list_id=list_id),
+                       'count': Item.objects.filter(list_id=list_id).count(),
                        'lists': List.objects.all(),
                        'addItemForm' : form,
                        'list_id': list_id
@@ -33,14 +34,7 @@ def add_item(request, list_id):
             if form.is_valid():
                 form.save()
             form = AddItemForm()
-
-    return  render(request, "ui/home.html",
-                   {
-                       'items': Item.objects.filter(list_id=list_id),
-                       'lists': List.objects.all(),
-                       'addItemForm' : form,
-                       'list_id': list_id
-                    })
+    return open_list(request, list_id)
 
 @login_required
 def delete_item(request, item_id, list_id):

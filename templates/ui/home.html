@@ -3,21 +3,34 @@
 
 {% block content %}
 
-
 <div class="row content">
-    <div class="col-sm-3 sidenav">
-        <h4>Lists:</h4>
-        <ul class="nav">
-             {% for l in lists %}
-            <li class="list-group-item">
-                <a href="{% url 'list_page' list_id=l.id %}" >{{ l.name }}</a>
-            </li>
-            {% endfor %}
-        </ul>
+    <div class="col-sm-3 sidenav btn-group-vertical">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Lists:
+            </div>
+            <ul class="list-group">
+                {% for l in lists %}
+                <li class="list-group-item">
+                    <a href="{% url 'list_page' list_id=l.id %}">{{ l.name }}</a>
+                    <span class="badge badge-default badge-pill">{{ l.table_items.count}}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="panel-body">
+                <p>...</p>
+            </div>
+            <div class="panel-footer onhover">
+                <div data-toggle="modal" data-target="#myModal">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    Utwórz listę
+                </div>
+
+            </div>
+        </div>
     </div>
 
     <div class="col-sm-9">
-
         <form method="POST" action="{% url 'add_item' list_id=list_id %}">
             <div class="input-group">
                 {{ addItemForm | crispy }}
@@ -27,7 +40,7 @@
                 </span>
             </div>
         </form>
-
+<br>
 
         <ul class="list-group">
             {% for i in items %}
@@ -45,5 +58,29 @@
         </ul>
     </div>
 </div>
+
+
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Dodaj nową listę</h4>
+        </div>
+        <div class="modal-body">
+          <p>text</p>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+
+    </div>
+  </div>
 
 {% endblock %}
