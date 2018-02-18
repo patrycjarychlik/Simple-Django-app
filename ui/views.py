@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 
-from interface.forms import AddItemForm
+from ui.forms import AddItemForm
 from website.models import List, Item
 
 
@@ -20,7 +20,7 @@ def home(request):
             form = AddItemForm()
     else:
         form = AddItemForm()
-    return  render(request, "interface/home.html",
+    return  render(request, "ui/home.html",
                    {
                        'items': Item.objects.all(),
                        'lists': List.objects.all(),

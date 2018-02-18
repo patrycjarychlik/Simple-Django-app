@@ -8,7 +8,7 @@ urlpatterns = [
     path('home', home, name="user_page"),
 
     path('login',
-         LoginView.as_view(template_name="interface/login_form.html"),
+         LoginView.as_view(template_name="ui/login_form.html"),
          name="login"),
 
     path('logout',

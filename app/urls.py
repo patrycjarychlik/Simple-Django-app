@@ -20,6 +20,6 @@ from .views import welcome
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('interface/', include('interface.urls')),
+    path('ui/', include('ui.urls')),
     re_path('^$', welcome, name="main_welcome")
 ]
