@@ -15,14 +15,19 @@
           <div class="actions container text-center">
 
               <div style="margin: 0 auto; width: 35%">
-                  <form role="form"
+                  <form id="login_form" role="form"
                         action="{% url 'login' %}"
                         method="post">
                       {% csrf_token %}
 
                       {{ form | crispy }}
+                      <div class="actions">
 
-                      <button type="submit" class="btn-get-started btn-lg">zaloguj się</button>
+                          <!--<button type="submit" class="btn-get-started">zaloguj się</button>-->
+                          <a href="#" onclick="document.forms['login_form'].submit(); return false;"
+                             class="btn-get-started">Zaloguj się</a>
+                          <a href="{% url 'signup' %}" class="btn-ourFeatures">Zarejestruj się</a>
+                      </div>
                   </form>
               </div>
           </div>

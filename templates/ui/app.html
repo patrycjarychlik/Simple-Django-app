@@ -3,6 +3,9 @@
 
 {% block content %}
 
+<!--==========================
+  Lists
+  ============================-->
 <div class="row content">
     <div class="col-sm-3 sidenav btn-group-vertical">
         <div class="panel panel-default">
@@ -21,7 +24,7 @@
                 <p>...</p>
             </div>
             <div class="panel-footer onhover">
-                <div data-toggle="modal" data-target="#myModal">
+                <div data-toggle="modal" data-target="#addList">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     Utwórz listę
                 </div>
@@ -30,6 +33,9 @@
         </div>
     </div>
 
+<!--==========================
+  Add Item
+  ============================-->
     <div class="col-sm-9">
         <form method="POST" action="{% url 'add_item' list_id=list_id %}">
             <div class="input-group">
@@ -42,26 +48,42 @@
         </form>
         <br>
 
+
+ <!--==========================
+  List Items
+  ============================-->
+
         <ul class="list-group">
             {% for i in items %}
-            <li class="list-group-item">
+            <li class="list-group-item" data-toggle="modal" data-target="#editItem">
                 {{i.text}}
-
-                <form method="POST" action="{% url 'delete_item' i.id list_id %}" style="display:inline">
+                <span class="pull-right">
+                    <span style="padding-right: 10px;"> {{i.price|floatformat:2}}</span>
+                    <form method="POST" action="{% url 'delete_item' i.id list_id %}" style="display:inline">
                     {% csrf_token %}
                     <button type="submit" class="close" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </form>
+                    </form>
+                </span>
             </li>
             {% endfor %}
         </ul>
+         <div class="alert alert-info text-right" role="alert"> suma wydatków:
+        {% if list_sum %}
+           {{list_sum.total}}
+        {% else %}
+             0.00
+        {% endif %}
+         </div>
     </div>
 </div>
 
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
+<!--==========================
+ Modal
+  ============================-->
+<div class="modal fade" id="addList" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -71,7 +93,37 @@
                 <h4 class="modal-title">Dodaj nową listę</h4>
             </div>
             <div class="modal-body">
-                <p>text</p>
+                <form method="POST" action="{% url 'add_list' list_id=list_id %}">
+                    <div class="input-group">
+                        {{ addListForm | crispy }}
+                        {% csrf_token %}
+                        <span class="input-group-btn">
+                    <button class="btn btn-default" name="addList" type="submit">Add</button>
+                </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="editItem" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edytuj wpis</h4>
+            </div>
+            <div class="modal-body text-right">
+                <form method="POST" action="{% url 'add_list' list_id=list_id %}">
+                        {{ editItemForm | crispy }}
+                        {% csrf_token %}
+                    <button class="btn-info btn-dialog" name="addList" type="submit">Edytuj</button>
+                </form>
             </div>
             <div class="modal-footer">
             </div>

@@ -1,0 +1,50 @@
+{% extends "main.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+ {% block www %}
+
+  <section id="hero">
+      <div class="hero-container">
+          <div class="hero-logo">
+              <img class="" src="{% static 'img/logo.png' %}" alt="weddify">
+          </div>
+
+          <h1>Zaloguj się</h1>
+          <div class="actions container text-center">
+
+              <div style="margin: 0 auto; width: 35%">
+                  <form id="signup_form" role="form"
+                        action="{% url 'signup' %}"
+                        method="post">
+                      {% csrf_token %}
+
+                      <p>Wypełnij formularz aby rozpocząć przygodę z planowaniem.</p>
+
+                      <!--{{ form | crispy }}-->
+                      {% for field in form %}
+                          <p>
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.help_text %}
+                            {% endif %}
+                            {% for error in field.errors %}
+                              <p style="color: #ff9cc2">{{ error }}</p>
+                            {% endfor %}
+                          </p>
+                        {% endfor %}
+
+                      <a href="#" onclick="document.forms['signup_form'].submit(); return false;"
+                             class="btn-get-started">Zarejestruj mnie</a>
+                  </form>
+
+              </div>
+          </div>
+      </div>
+  </section>
+
+
+{% endblock %}
+
+
+
