@@ -10,18 +10,27 @@
     <div class="col-sm-3 sidenav btn-group-vertical">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Lists:
+                Twoje listy:
             </div>
             <ul class="list-group">
                 {% for l in lists %}
                 <li class="list-group-item">
                     <a href="{% url 'list_page' list_id=l.id %}">{{ l.name }}</a>
-                    <span class="badge badge-default badge-pill">{{ l.table_items.count}}</span>
+                    <span class="pull-right">
+                        <span class="badge badge-default badge-pill"
+                              style="margin: 0 8px;">{{l.number_of}}</span>
+                         <form method="POST" action="{% url 'delete_list' l.id %}" style="display:inline">
+                           {% csrf_token %}
+                        <button type="submit" class="close" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                         </form>
+                    </span>
                 </li>
                 {% endfor %}
             </ul>
             <div class="panel-body">
-                <p>...</p>
+                <p></p>
             </div>
             <div class="panel-footer onhover">
                 <div data-toggle="modal" data-target="#addList">
@@ -37,28 +46,44 @@
   Add Item
   ============================-->
     <div class="col-sm-9">
-        <form method="POST" action="{% url 'add_item' list_id=list_id %}">
-            <div class="input-group">
-                {{ addItemForm | crispy }}
-                {% csrf_token %}
-                <span class="input-group-btn">
-                    <button class="btn btn-default" name="addItem" type="submit">Add</button>
-                </span>
-            </div>
-        </form>
-        <br>
-
+        {% if list_id != 0 %}
+            <h3 class="list-name">{{list.name}}</h3>
+            <form method="POST" action="{% url 'add_item' list_id=list_id %}">
+                <div class="input-group">
+                    {{ addItemForm | crispy }}
+                    {% csrf_token %}
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" name="addItem" type="submit">Add</button>
+                    </span>
+                </div>
+            </form>
+            <br>
+        {% endif %}
 
  <!--==========================
-  List Items
+  Items
   ============================-->
 
+        {% if items.count != 0 %}
         <ul class="list-group">
             {% for i in items %}
-            <li class="list-group-item" data-toggle="modal" data-target="#editItem">
-                {{i.text}}
+            <li class="list-group-item">
+                <form id="mark_done_{{i.id}}" method="POST" action="{% url 'mark_done' i.id list_id %}" style="display:inline">
+                    {% csrf_token %}
+                    <span class="checkbox-inline">
+                    <label>
+                         <a href="#" onclick="document.forms['mark_done_{{i.id}}'].submit(); return false;">
+                             <input type="checkbox"
+                             {% if i.marked %}
+                                    checked
+                              {% endif %}></a>
+                             {{i.text}}
+                    </label>
+                    </span>
+                </form>
+
+
                 <span class="pull-right">
-                    <span style="padding-right: 10px;"> {{i.price|floatformat:2}}</span>
                     <form method="POST" action="{% url 'delete_item' i.id list_id %}" style="display:inline">
                     {% csrf_token %}
                     <button type="submit" class="close" aria-label="Close">
@@ -69,13 +94,53 @@
             </li>
             {% endfor %}
         </ul>
-         <div class="alert alert-info text-right" role="alert"> suma wydatków:
-        {% if list_sum %}
-           {{list_sum.total}}
-        {% else %}
-             0.00
         {% endif %}
-         </div>
+
+        {% if items_done.count != 0 %}
+         <div class="list-name" style="font-size:16px; margin:10px 0px"> wykonane: </div>
+        <ul class="list-group">
+            {% for i in items_done %}
+            <li class="list-group-item disabled">
+                <form id="mark_done2_{{i.id}}" method="POST" action="{% url 'mark_done' i.id list_id %}" style="display:inline">
+                    {% csrf_token %}
+                    <span class="checkbox-inline">
+                    <label>
+                         <a href="#" onclick="document.forms['mark_done2_{{i.id}}'].submit(); return false;">
+                             <input type="checkbox"
+                             {% if i.marked %}
+                                    checked
+                              {% endif %}></a>
+                        <strike> {{i.text}}</strike>
+                    </label>
+                    </span>
+                </form>
+
+
+                <span class="pull-right">
+                    <form method="POST" action="{% url 'delete_item' i.id list_id %}" style="display:inline">
+                    {% csrf_token %}
+                    <button type="submit" class="close" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </form>
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if items_done.count == 0 and items.count == 0 %}
+                 {% if lists.count == 0 %}
+                     <div class="alert alert-info text-center icon-welcome-block" role="alert">
+                         <div style="display: block!important; font-size: 85px; padding: 20px">
+                         <div class="fa fa-calendar-check-o"></div>
+                         </div>
+                              Stwórz nową listę a nie umknie ci żaden szczegół!
+                     </div>
+                {% else %}
+                      <div class="alert alert-info text-center" role="alert"> Co masz do zrobienia? Dodaj swoje zadania!</div>
+                  {% endif %}
+        {% endif %}
     </div>
 </div>
 
@@ -108,28 +173,5 @@
     </div>
 </div>
 
-
-
-<div class="modal fade" id="editItem" role="dialog">
-    <div class="modal-dialog">
-
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Edytuj wpis</h4>
-            </div>
-            <div class="modal-body text-right">
-                <form method="POST" action="{% url 'add_list' list_id=list_id %}">
-                        {{ editItemForm | crispy }}
-                        {% csrf_token %}
-                    <button class="btn-info btn-dialog" name="addList" type="submit">Edytuj</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-
-    </div>
-</div>
 
 {% endblock %}

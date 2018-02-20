@@ -1,13 +1,13 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm, forms
 
-from website.models import Item, List
+from website.models import Item, List, Category, Service
 
 
 class AddItemForm(ModelForm):
     class Meta:
         model = Item
-        exclude = ('date', 'marked', 'list', 'price')
+        exclude = ('date', 'marked', 'list')
 
 class EditItemForm(ModelForm):
     class Meta:
@@ -27,3 +27,14 @@ class UserCreateForm(UserCreationForm):
         for fieldname in ['username', 'password1', 'password2']:
             self.fields[fieldname].help_text = ""
 
+
+class AddServiceForm(ModelForm):
+    class Meta:
+        model = Service
+        exclude = ('date', 'category')
+
+
+class AddCategoryForm(ModelForm):
+    class Meta:
+        model = Category
+        exclude = ('date', 'user')

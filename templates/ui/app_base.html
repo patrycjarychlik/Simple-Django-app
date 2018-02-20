@@ -18,6 +18,13 @@
                 <a href="/"><img src="{% static 'img/logo.png' %}" alt="" title=""/></img></a>
             </div>
 
+            <nav id="app-menu-container">
+                <ul class="nav-menu">
+                    <li class="{% if active_tab == 'todo_list' %} menu-active{% endif %}"><a href="{% url 'user_home_page' %}">Lista Zadań</a></li>
+                    <li class="{% if active_tab == 'money' %} menu-active{% endif %}"><a href="{% url 'user_money_page' %}">Zarządzaj budżetem</a></li>
+                </ul>
+            </nav>
+
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
                     {% if user.is_authenticated %}
@@ -31,7 +38,9 @@
     </header>
 </nav>
 
+
 <div class="container app-content">
+
     {% block content %}
     {% endblock %}
 </div>
