@@ -9,6 +9,6 @@ python manage.py runserver
 To access app go to: http://127.0.0.1:8000/
 
 ## tested with:
-* Django 2.0
+* Django 2.0.2
 * Bootstrap 3
-* Python 3.6
+* Python 3.6.3
