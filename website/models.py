@@ -42,6 +42,12 @@ class Service(models.Model):
     def __str__(self):
         return "{0}".format(self.text)
 
+class Budget(models.Model):
+    value = models.DecimalField(default=0.0, decimal_places=2, verbose_name="", max_digits=20)
+    user = models.ForeignKey(User, related_name="budget_owner", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{0}".format(self.text)
 
 
 

@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm, forms
 
-from website.models import Item, List, Category, Service
+from website.models import Item, List, Category, Service, Budget
 
 
 class AddItemForm(ModelForm):
@@ -38,3 +38,8 @@ class AddCategoryForm(ModelForm):
     class Meta:
         model = Category
         exclude = ('date', 'user')
+
+class BudgetForm(ModelForm):
+    class Meta:
+        model = Budget
+        exclude = ('user',)

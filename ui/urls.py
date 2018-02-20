@@ -2,7 +2,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 
 from .views import home, open_list, add_item, delete_item, add_list, SignUpView, add_service, add_category, \
-    delete_service, open_money, money, delete_list, delete_category, mark_done
+    delete_service, open_money, money, delete_list, delete_category, mark_done, edit_budget
+
 urlpatterns = [
 
     path('home', home, name="user_home_page"),
@@ -14,6 +15,8 @@ urlpatterns = [
 
     path('list/delete/<int:list_id>', delete_list, name="delete_list"),
     path('list/<int:list_id>', add_list, name="add_list"),
+
+    path('budget/<int:list_id>', edit_budget, name="edit_budget"),
 
 
 

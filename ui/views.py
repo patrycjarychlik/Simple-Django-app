@@ -8,8 +8,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
 from ui.forms import AddItemForm, AddListForm, EditItemForm, UserCreationForm, AddCategoryForm, \
-    AddServiceForm
-from website.models import List, Item, Category, Service
+    AddServiceForm, BudgetForm
+from website.models import List, Item, Category, Service, Budget
 from django.db import models
 
 class SQCount(Subquery):
@@ -80,7 +80,7 @@ def mark_done(request, item_id, list_id):
         else:
             item.marked=True
         item.save()
-    return open_list(request, list_id)
+    return open_list(request, list_id)\
 
 @login_required
 def delete_list(request, list_id):
@@ -112,9 +112,6 @@ class SignUpView(CreateView):
                             current_app='myapp')
 
 
-
-
-
 @login_required
 def money(request):
     return open_money(request, 0)
@@ -123,22 +120,41 @@ def money(request):
 def open_money(request, list_id):
     form = AddServiceForm(initial={'price': '0.00'})
     listForm = AddCategoryForm()
+    budget_init=Budget.objects.get_or_create(user=request.user)[0];
+    budgetForm = BudgetForm(instance=budget_init)
+
     items =  Service.objects.filter(category_id=list_id);
+    sum=Service.objects.filter(category_id=list_id).aggregate(Sum('price'))['price__sum']
+    sum_all = Service.objects.filter(category__user=request.user).aggregate(Sum('price'))['price__sum']
+
     if list_id == 0:
         items= Service.objects.filter(category__user=request.user);
+        sum=sum_all;
+
+    budget=Budget.objects.filter(user=request.user).first()
+
+    calculations=(1-(sum_all or 0)/(budget.value or 1))*100
+    if calculations:
+        percent=calculations
+    else:
+        percent=0
 
     return  render(request, "ui/money.html",
                    {
                        'active_tab': 'money',
-                        'items':items,
+                       'items':items,
+                       'budget': budget,
                        'count': Service.objects.filter(category_id=list_id).count(),
                        'lists': Category.objects.filter(Q(user=request.user)),
                        'addItemForm' : form,
                        'addListForm': listForm,
+                       'addBudgetForm': budgetForm,
                        'list_id': list_id,
                        'list': Category.objects.filter(id=list_id).first(),
-                       'list_sum': Service.objects.filter(category_id=list_id).aggregate(Sum('price'))['price__sum'],
-                    })
+                       'list_sum': sum,
+                       'percent':percent
+
+                   })
 
 @login_required
 def add_service(request, list_id):
@@ -182,4 +198,12 @@ def add_category(request, list_id):
     form = AddCategoryForm()
     return open_money(request, list_id)
 
+@login_required
+def edit_budget(request,list_id):
+    if request.method == "POST":
+        form = BudgetForm(data=request.POST)
+        budget = Budget.objects.get_or_create(user=request.user)[0]
+        budget.value=form.data['value'];
+        budget.save()
+    return open_money(request, list_id)
 

@@ -41,6 +41,26 @@
 
             </div>
         </div>
+        <h3 class="list-name">Twój budżet</h3>
+        <span class="list-name" style="font-size:30px;">
+           {% if budget.value %}
+                {{budget.value|floatformat:2}}
+            {% else %}
+                0.00
+            {% endif %}
+        </span>
+         <div data-toggle="modal" data-target="#editBudget">
+             <br>
+                  <button class="btn-info " name="addItem" type="submit">
+                      Edytuj budżet
+                  </button>
+         </div>
+        <br>
+         <h3 class="list-name">pozostało:</h3>
+        <span class="list-name" style="font-size:30px;">
+           {{percent|floatformat:2}}%
+        </span>
+
     </div>
 
 <!--==========================
@@ -49,12 +69,12 @@
 
     <div class="col-sm-9">
         {% if list_id != 0 %}
-            <h3 class="list-name" style="color:white">{{list.name}}</h3>
+            <h3 class="list-name">{{list.name}}</h3>
             <form id="add_service" method="POST" action="{% url 'add_service' list_id=list_id %}">
                 <div class="display">
                     {{ addItemForm | crispy }}
                     {% csrf_token %}
-                    <div class="text-right">
+                    <div class="text-right" >
                         <button class="btn-info btn-dialog" name="addItem" type="submit">Add</button>
                     </div>
                 </div>
@@ -137,26 +157,26 @@
 </div>
 
 
-<!--<div class="modal fade" id="editItem" role="dialog">-->
-    <!--<div class="modal-dialog">-->
+<div class="modal fade" id="editBudget" role="dialog">
+    <div class="modal-dialog">
 
-        <!--<div class="modal-content">-->
-            <!--<div class="modal-header">-->
-                <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-                <!--<h4 class="modal-title">Edytuj wpis</h4>-->
-            <!--</div>-->
-            <!--<div class="modal-body text-right">-->
-                <!--<form method="POST" action="{% url 'add_category' list_id=list_id %}">-->
-                        <!--{{ editItemForm | crispy }}-->
-                        <!--{% csrf_token %}-->
-                    <!--<button class="btn-info btn-dialog" name="addList" type="submit">Edytuj</button>-->
-                <!--</form>-->
-            <!--</div>-->
-            <!--<div class="modal-footer">-->
-            <!--</div>-->
-        <!--</div>-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Ustal Budżet</h4>
+            </div>
+            <div class="modal-body text-right">
+                <form method="POST" action="{% url 'edit_budget' list_id %}">
+                        {{ addBudgetForm | crispy }}
+                        {% csrf_token %}
+                    <button class="btn-info btn-dialog" name="addBudget" type="submit">Zapisz</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
 
-    <!--</div>-->
-<!--</div>-->
+    </div>
+</div>
 
 {% endblock %}
