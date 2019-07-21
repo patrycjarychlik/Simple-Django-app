@@ -1,5 +1,5 @@
 #  To do list app / wedding planner app
-Simple python & Django application
+Simple python & Django application <br>
 To run server go to manage.py location and run:
 
 ```
